@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Net;
+
 namespace MultiNet
 {
-    public class Class1
+    class BaseServer
     {
     }
 }
