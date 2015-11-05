@@ -12,10 +12,12 @@ namespace MultiNet
     class BaseServer
     {
         Socket server = null;
-        int maxPlayers, connectionPort;
+        int maxPlayers, connectionPort, playersCount;
 
         public BaseServer()
         {
+            playersCount = 0;
+            maxPlayers = 10;
             server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
@@ -30,8 +32,12 @@ namespace MultiNet
 
         private void OnConnect(IAsyncResult iar)
         {
-            Socket client = server.EndAccept(iar);
-            server.BeginAccept(new AsyncCallback(OnConnect), null);
+            if (playersCount < maxPlayers)
+            {
+                Socket client = server.EndAccept(iar);
+                server.BeginAccept(new AsyncCallback(OnConnect), null);
+                playersCount++;
+            }
         }
     }
 }
